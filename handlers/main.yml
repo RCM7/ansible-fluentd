@@ -5,11 +5,14 @@
 - name: reload td-agent
   service: name=td-agent state=reloaded
   when: tdagent_use_service|bool
+  become: true
 
 - name: restart td-agent
   service: name=td-agent state=restarted
   when: tdagent_use_service|bool
+  become: true
 
 - name: stop td-agent
   service: name=td-agent state=stopped
   when: tdagent_use_service|bool
+  become: true

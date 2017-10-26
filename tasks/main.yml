@@ -26,9 +26,11 @@
     state: directory
     owner: td-agent
     group: td-agent
+  become: true
 
 - name: rename default td-agent.conf
   command: creates="/etc/td-agent/td-agent.conf.bak" mv /etc/td-agent/td-agent.conf /etc/td-agent/td-agent.conf.bak
+  become: true
 
 
 
@@ -41,6 +43,7 @@
   when: tdagent_conf_copy is not defined and tdagent_conf_template is not defined
   notify:
     - reload td-agent
+  become: true
 
 - name: copy new "td-agent.conf" verbatim from main playbook's
   copy:
@@ -51,6 +54,7 @@
   when: tdagent_conf_copy is defined
   notify:
     - reload td-agent
+  become: true
 
 - name: copy (from template) new "td-agent.conf" from main playbook's
   template:
@@ -61,6 +65,7 @@
   when: tdagent_conf_template is defined
   notify:
     - reload td-agent
+  become: true
 
 - name: copy other config files from playbook's, if any
   template:
@@ -71,6 +76,7 @@
   with_dict: '{{ tdagent_conf_others | default({}) }}'
   notify:
     - reload td-agent
+  become: true
 
 
 
@@ -86,6 +92,7 @@
   with_items: "{{ tdagent_plugins | default([]) }}"
   notify:
     - restart td-agent
+  become: true
 
 
 - name: install plugins with specified versions, if any
@@ -98,4 +105,5 @@
   with_dict: "{{ tdagent_plugins_versions | default({}) }}"
   notify:
     - restart td-agent
+  become: true
 
