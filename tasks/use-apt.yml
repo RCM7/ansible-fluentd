@@ -7,16 +7,16 @@
 # @see http://toolbelt.treasuredata.com/sh/install-ubuntu-trusty-td-agent2.sh
 #
 
-- name: testing
-  shell: id
-  become: true
+#- name: testing
+#  shell: ps aux | grep apt
+#  become: true
 
-- name: install apt-related binaries for Ansible to work
-  apt: name={{ item }}  state=present update_cache=yes
-  with_items:
-    - python-software-properties
-    - apt-transport-https
-  become: true
+  #- name: install apt-related binaries for Ansible to work
+  #  apt: name={{ item }}  state=present update_cache=yes
+  #  with_items:
+  #    - python-software-properties
+  #    - apt-transport-https
+  #  become: true
 
 - name: add APT signing key for td-agent
   apt_key: url=https://packages.treasuredata.com/GPG-KEY-td-agent state=present
